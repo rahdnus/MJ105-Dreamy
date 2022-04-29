@@ -92,8 +92,8 @@ public class StoryManager : MonoBehaviour
 		choiceText.text = text;
 
 		// Make the button expand to fit the text
-		HorizontalLayoutGroup layoutGroup = choice.GetComponent <HorizontalLayoutGroup> ();
-		layoutGroup.childForceExpandHeight = false;
+		// HorizontalLayoutGroup layoutGroup = choice.GetComponent <HorizontalLayoutGroup> ();
+		// layoutGroup.childForceExpandHeight = false;
 
 		return choice;
 	}
@@ -106,7 +106,7 @@ public class StoryManager : MonoBehaviour
     {
         if(!Input.anyKey)
         return;
-        
+
         if(OnNext!=null)
         {
             if(Input.GetKeyDown(KeyCode.Return)||Input.GetMouseButton(0))
