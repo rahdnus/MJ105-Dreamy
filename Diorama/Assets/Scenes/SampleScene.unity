@@ -2060,6 +2060,8 @@ MonoBehaviour:
     character: {fileID: 1709819487}
   - index: 1
     character: {fileID: 731640228}
+  playableassets:
+  - {fileID: 11400000, guid: 2aafb4a31391ea94996dd8fdc0a05847, type: 2}
   inkJSONAsset: {fileID: 4900000, guid: b2c471d0b18048249afc89980ca948ac, type: 3}
   DialoguePanel: {fileID: 1358673845}
   ChoicesPanel: {fileID: 1726843428}

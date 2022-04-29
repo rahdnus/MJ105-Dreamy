@@ -13,7 +13,9 @@ public class StoryManager : MonoBehaviour
     public static event Action<Story> OnCreateStory;
     public static event Action OnNext;
 	public Story story;
+    PlayableDirector director;
     string currentSpeaker="hello";
+    [SerializeField]PlayableAsset[] playableassets;
     [SerializeField]TextAsset inkJSONAsset = null;
 
     [Space(10)]
@@ -49,6 +51,19 @@ public class StoryManager : MonoBehaviour
                 break;
             } 
         }
+        director=GetComponent<PlayableDirector>();
+        story.BindExternalFunction("playTimeline",(string Name) => {
+            foreach(PlayableAsset playable in playableassets)
+            {
+                if(playable.name==Name)
+                {
+                    director.playableAsset=playable;
+                  break;
+                }
+                  
+            }
+            director.Play();
+        });
 
     }
     void Update()

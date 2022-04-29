@@ -1,5 +1,6 @@
 INCLUDE Global.ink
 
+EXTERNAL playTimeline(name)
 
 ===Start===
 - {Scenario}:I looked at Monsieur Fogg 
@@ -24,4 +25,7 @@ INCLUDE Global.ink
             - -     After that, <>
         +   ... but I said nothing[] and <>
         - we passed the day in silence.
+        +[next]
+        -
+        ~playTimeline("curtains")
         - -> END
