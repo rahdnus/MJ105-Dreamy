@@ -12,7 +12,8 @@ public class Character : MonoBehaviour
     }
     public void Speak()
     {
-        storyManager.Begin();
+        storyManager.Begin(name);
+        prompt.SetActive(false);
     }
     
    void OnTriggerEnter2D(Collider2D collider)

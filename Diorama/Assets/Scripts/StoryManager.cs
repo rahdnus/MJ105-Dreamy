@@ -1,5 +1,6 @@
 using System;
 using UnityEngine.UI;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -9,13 +10,23 @@ using System.IO;
 
 public class StoryManager : MonoBehaviour
 {
-    [SerializeField] Scenario[] scenarios;
-    public static event Action<Story> OnCreateStory;
+     public static event Action<Story> OnCreateStory;
     public static event Action OnNext;
 	public Story story;
+
+    [SerializeField] Scenario[] scenarios;
+
+    AudioSource audioSource;
+
     PlayableDirector director;
     string currentSpeaker="hello";
+    [Space(20)]
+
     [SerializeField]PlayableAsset[] playableassets;
+    [SerializeField]AudioClip[] audioClips;
+    [Space(20)]
+    Dictionary<string,AudioClip> audioDictionary=new Dictionary<string,AudioClip>();
+    Dictionary<string,PlayableAsset> playableassetDictionary=new Dictionary<string, PlayableAsset>();
     [SerializeField]TextAsset inkJSONAsset = null;
 
     [Space(10)]
@@ -43,6 +54,14 @@ public class StoryManager : MonoBehaviour
         Debug.Log(data.playercounter);
         story.variablesState["Scenario"]=data.playercounter;
 
+        foreach(AudioClip clip in audioClips)
+        {
+            audioDictionary.Add(clip.name,clip);
+        }
+         foreach(PlayableAsset asset in playableassets)
+        {
+            playableassetDictionary.Add(asset.name,asset);
+        }
         foreach(Scenario scenario in scenarios)
         {
             if(scenario.index==data.playercounter)  
@@ -52,18 +71,26 @@ public class StoryManager : MonoBehaviour
             } 
         }
         director=GetComponent<PlayableDirector>();
-        story.BindExternalFunction("playTimeline",(string Name) => {
-            foreach(PlayableAsset playable in playableassets)
-            {
-                if(playable.name==Name)
-                {
-                    director.playableAsset=playable;
-                  break;
-                }
-                  
-            }
+        audioSource=GetComponent<AudioSource>();
+
+        story.BindExternalFunction("playCutscene",(string Name) => {
+            
+            if(!playableassetDictionary.ContainsKey(Name))
+                return;
+
+            director.playableAsset=playableassetDictionary[Name];
             director.Play();
         });
+        story.BindExternalFunction("playAudio",(string Name) => {
+            
+            if(!audioDictionary.ContainsKey(Name))
+                return;
+
+            audioSource.clip=audioDictionary[Name];
+            audioSource.Play();
+            
+        });
+        
 
     }
     void Update()
@@ -86,7 +113,6 @@ public class StoryManager : MonoBehaviour
         {
             if(scenario.character.name==currentSpeaker)  
             {
-                Debug.Log("removed");
                 Destroy(scenario.character);
                 break;
             } 
@@ -104,8 +130,9 @@ public class StoryManager : MonoBehaviour
 			GameObject.Destroy (ChoicesPanel.transform.GetChild (i).gameObject);
 		}
     }
-    public void Begin()
+    public void Begin(string Name)
     {
+        currentSpeaker=Name;
         story.ChoosePathString("Start");
         RefreshView();
         DialoguePanel.SetActive(true);
@@ -136,10 +163,11 @@ public class StoryManager : MonoBehaviour
 				});
 			}
 		}
-        
-		else {
+        else
+		{
             	OnNext+= (delegate {
 				DialoguePanel.SetActive(false);
+                FindObjectOfType<Player>().inConversation=false;
                 OnNext=null;
 				});
 		}

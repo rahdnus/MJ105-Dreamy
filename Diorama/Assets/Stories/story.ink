@@ -1,6 +1,8 @@
 INCLUDE Global.ink
 
-EXTERNAL playTimeline(name)
+EXTERNAL playCustscene(name)
+EXTERNAL playAudio(name)
+
 
 ===Start===
 - {Scenario}:I looked at Monsieur Fogg 
@@ -20,12 +22,13 @@ EXTERNAL playTimeline(name)
                             'That is what we will endeavour to find out,' he answered.
                     +++   'A modest wager, I trust?'
                             'Twenty thousand pounds,' he replied, quite flatly.
-                    +++   I asked nothing further of him then[.], and after a final, polite cough, he offered nothing more to me. <>
+                    +++ (final)  I asked nothing further of him then[.], and after a final, polite cough, he offered nothing more to me. <>
             ++     'Ah[.'],' I replied, uncertain what I thought.
             - -     After that, <>
         +   ... but I said nothing[] and <>
         - we passed the day in silence.
         +[next]
-        -
-        ~playTimeline("curtains")
+        -        
+        -final:~playCustscene("curtains")
+
         - -> END

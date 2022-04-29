@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // [Tooltip("less than ")]
+    public bool inConversation=false;
     [SerializeField] float moveSpeed=0.2f;
     CharacterController controller;
     LayerMask interactionMask;
@@ -17,7 +18,10 @@ public class Player : MonoBehaviour
     {
         if(!Input.anyKey)
             return;
-        Move();
+
+        if(!inConversation)
+            Move();
+        
         Interact();
 
     }
@@ -43,7 +47,10 @@ public class Player : MonoBehaviour
                     }    
                 }
                 if(interaction)
+                {
                     interaction.GetComponentInParent<Character>().Speak();
+                    inConversation=true;
+                }
 
             }
         }
