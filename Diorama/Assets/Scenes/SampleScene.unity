@@ -716,7 +716,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.2111001}
-  m_AnchoredPosition: {x: 0.026000977, y: 7.6450043}
+  m_AnchoredPosition: {x: 0.026000977, y: 7.6449585}
   m_SizeDelta: {x: -58, y: -1.501}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &883346159
@@ -943,9 +943,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 268.89478, y: 81.05997}
-  m_SizeDelta: {x: 901.153, y: 367.593}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 268.895, y: -51.369003}
+  m_SizeDelta: {x: 861.853, y: 102.74}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1037828960
 MonoBehaviour:
@@ -1095,7 +1095,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1358673846}
   m_Layer: 5
-  m_Name: DialoguePanel
+  m_Name: Dialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1157,8 +1157,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.17600001, y: 0.16536152}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.72406, y: -17.335007}
-  m_SizeDelta: {x: -38.715, y: 11.815}
+  m_AnchoredPosition: {x: -10.541016, y: -25.473999}
+  m_SizeDelta: {x: -21.082, y: 28.094}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1539500820
 MonoBehaviour:
@@ -1232,8 +1232,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -4.60968, y: -4.4120026}
-  m_SizeDelta: {x: -9.2195, y: -8.824}
+  m_AnchoredPosition: {x: -1.3540039, y: 1.5475006}
+  m_SizeDelta: {x: -41.778, y: -33.767}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1695710769
 MonoBehaviour:
@@ -1520,7 +1520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e37c5189acd02fb478d02f65adbbacd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inkJSONAsset: {fileID: 4900000, guid: 6cf48bb6d89824cc69e35b43f9a1aca6, type: 3}
+  inkJSONAsset: {fileID: 4900000, guid: b2c471d0b18048249afc89980ca948ac, type: 3}
   DialoguePanel: {fileID: 1358673845}
   ChoicesPanel: {fileID: 1726843428}
   textUI: {fileID: 1695710769}

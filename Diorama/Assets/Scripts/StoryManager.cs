@@ -2,23 +2,53 @@ using System;
 using UnityEngine.UI;
 using UnityEngine;
 using Ink.Runtime;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+
 public class StoryManager : MonoBehaviour
 {
     public static event Action<Story> OnCreateStory;
     public static event Action OnNext;
 
-    [SerializeField]TextAsset inkJSONAsset = null;
-    [SerializeField]GameObject DialoguePanel,ChoicesPanel;
-    [SerializeField] Text textUI,nameUI;
-    [SerializeField] Image imageUI;
-	[SerializeField] Button buttonPrefab = null;
-
 	public Story story;
+    
 
+    [SerializeField]TextAsset inkJSONAsset = null;
+
+    [Space(10)]
+    [SerializeField]GameObject DialoguePanel;
+    [SerializeField]GameObject ChoicesPanel;
+
+    [Space(10)]
+    [SerializeField] Text textUI;
+    [SerializeField] Text nameUI;
+    [SerializeField] Image imageUI;
+    
+    [Space(10)]    
+	[SerializeField] Button buttonPrefab = null;
     void Awake()
     {
         StartStory();
         DialoguePanel.SetActive(false);
+
+        string path=Application.persistentDataPath+"/play.sav";
+        FileStream stream=new FileStream(path,FileMode.Open,FileAccess.Read);
+        PlayerData data=new PlayerData();
+        BinaryFormatter formatter=new BinaryFormatter();
+
+        data=formatter.Deserialize(stream) as PlayerData;
+        story.variablesState["Scenario"]=data.playercounter;
+    }
+    void Update()
+    {
+        if(!Input.anyKey)
+        return;
+
+        if(OnNext!=null)
+        {
+            if(Input.GetKeyDown(KeyCode.Return)||Input.GetMouseButton(0))
+                OnNext();
+        }
     }
     void StartStory () {
 		story = new Story (inkJSONAsset.text);
@@ -39,24 +69,17 @@ public class StoryManager : MonoBehaviour
         DialoguePanel.SetActive(true);
     }
     void RefreshView () {
-		// Remove all the UI on screen
         Clear();
         OnNext=null;
-		// Read all the content until we can't continue any more
 		while (story.canContinue) {
-			// Continue gets the next line of the story
 			string text = story.Continue ();
-			// This removes any white space from the text.
 			text = text.Trim();
             textUI.text+=text;
-			// Display the text on screen!
 		}
 
-		// Display all the choices, if there are any!
         if(story.currentChoices.Count==1 && (story.currentChoices[0].text=="next"))
         {
              Choice choice = story.currentChoices [0];
-				// Tell the button what to do when we press it
 				OnNext+= (delegate {
 					OnClickChoiceButton (choice);
 				});
@@ -66,14 +89,12 @@ public class StoryManager : MonoBehaviour
 			for (int i = 0; i < story.currentChoices.Count; i++) {
 				Choice choice = story.currentChoices [i];
 				Button button = CreateChoiceView (choice.text.Trim ());
-				// Tell the button what to do when we press it
 				button.onClick.AddListener (delegate {
 					OnClickChoiceButton (choice);
 				});
 			}
 		}
         
-		// If we've read all the content and there's no choices, the story is finished!
 		else {
             	OnNext+= (delegate {
 				DialoguePanel.SetActive(false);
@@ -83,18 +104,16 @@ public class StoryManager : MonoBehaviour
 	}
     Button CreateChoiceView (string text) 
     {
-		// Creates the button from a prefab
 		Button choice = Instantiate (buttonPrefab) as Button;
 		choice.transform.SetParent (ChoicesPanel.transform, false);
 		
-		// Gets the text from the button prefab
 		Text choiceText = choice.GetComponentInChildren<Text> ();
 		choiceText.text = text;
-
-		// Make the button expand to fit the text
-		// HorizontalLayoutGroup layoutGroup = choice.GetComponent <HorizontalLayoutGroup> ();
-		// layoutGroup.childForceExpandHeight = false;
-
+	/* 	
+    Make the button expand to fit the text
+		HorizontalLayoutGroup layoutGroup = choice.GetComponent <HorizontalLayoutGroup> ();
+		layoutGroup.childForceExpandHeight = false;
+    */
 		return choice;
 	}
     void OnClickChoiceButton (Choice choice) 
@@ -102,16 +121,4 @@ public class StoryManager : MonoBehaviour
 		story.ChooseChoiceIndex (choice.index);
 		RefreshView();
 	}
-    void Update()
-    {
-        if(!Input.anyKey)
-        return;
-
-        if(OnNext!=null)
-        {
-            if(Input.GetKeyDown(KeyCode.Return)||Input.GetMouseButton(0))
-                OnNext();
-        }
-    }
-
 }
