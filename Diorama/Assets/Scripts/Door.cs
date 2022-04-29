@@ -9,6 +9,7 @@ public class Door : MonoBehaviour
     Coroutine routine;
     void OnTriggerEnter2D(Collider2D other)
     {
+        if(other.GetComponentInParent<Player>())
         if(routine==null)
             routine=StartCoroutine(loadNextScene());
     }
