@@ -7,9 +7,6 @@ public class Character : MonoBehaviour
 {
     [SerializeField]GameObject prompt;
     [SerializeField]StoryManager storyManager;
-    public void Start()
-    {
-    }
     public void Speak()
     {
         storyManager.Begin(name);
@@ -18,14 +15,14 @@ public class Character : MonoBehaviour
     
    void OnTriggerEnter2D(Collider2D collider)
    {
-    //    if(collider.GetComponentInParent<Player>())
+        if(collider.GetComponentInParent<Player>())
        {
            prompt.SetActive(true);
        }
    }
    void OnTriggerExit2D(Collider2D collider)
    {
-    //    if(collider.GetComponentInParent<Player>())
+     if(collider.GetComponentInParent<Player>())
        {
            prompt.SetActive(false);
        }

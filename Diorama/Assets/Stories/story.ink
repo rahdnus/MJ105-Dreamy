@@ -1,6 +1,6 @@
 INCLUDE Global.ink
 
-EXTERNAL playCustscene(name)
+EXTERNAL playCutscene(name)
 EXTERNAL playAudio(name)
 
 
@@ -27,8 +27,7 @@ EXTERNAL playAudio(name)
             - -     After that, <>
         +   ... but I said nothing[] and <>
         - we passed the day in silence.
-        +[next]
-        -        
-        -final:~playCustscene("curtains")
+        +[next]     
+        -~playCutscene("curtains")
 
         - -> END

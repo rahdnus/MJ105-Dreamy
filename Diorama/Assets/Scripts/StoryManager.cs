@@ -3,17 +3,20 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
-
+using Cinemachine;
 using Ink.Runtime;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
 public class StoryManager : MonoBehaviour
 {
+
      public static event Action<Story> OnCreateStory;
     public static event Action OnNext;
 	public Story story;
-
+    [SerializeField]GameObject playerPrefab;
+    [SerializeField]CinemachineVirtualCamera virtualCamera;
+    [SerializeField]Transform spawnPoint;
     [SerializeField] Scenario[] scenarios;
 
     AudioSource audioSource;
@@ -53,15 +56,7 @@ public class StoryManager : MonoBehaviour
         data=formatter.Deserialize(stream) as PlayerData;
         Debug.Log(data.playercounter);
         story.variablesState["Scenario"]=data.playercounter;
-
-        foreach(AudioClip clip in audioClips)
-        {
-            audioDictionary.Add(clip.name,clip);
-        }
-         foreach(PlayableAsset asset in playableassets)
-        {
-            playableassetDictionary.Add(asset.name,asset);
-        }
+      
         foreach(Scenario scenario in scenarios)
         {
             if(scenario.index==data.playercounter)  
@@ -70,6 +65,16 @@ public class StoryManager : MonoBehaviour
                 break;
             } 
         }
+        
+        foreach(AudioClip clip in audioClips)
+        {
+            audioDictionary.Add(clip.name,clip);
+        }
+         foreach(PlayableAsset asset in playableassets)
+        {
+            playableassetDictionary.Add(asset.name,asset);
+        }
+        
         director=GetComponent<PlayableDirector>();
         audioSource=GetComponent<AudioSource>();
 
@@ -90,13 +95,16 @@ public class StoryManager : MonoBehaviour
             audioSource.Play();
             
         });
-        
-
+    }
+    void Start()
+    {
+        virtualCamera.Follow=Instantiate(playerPrefab,spawnPoint.position,Quaternion.identity).transform;
     }
     void Update()
     {
         if(!Input.anyKey)
         return;
+
         if(Input.GetKey(KeyCode.Return))
             {
                 GetComponent<PlayableDirector>().Play();
