@@ -58,3 +58,9 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+Diorama/Logs
+Diorama/Library
+Diorama/Temp
+
+
+
