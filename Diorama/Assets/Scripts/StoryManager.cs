@@ -86,7 +86,8 @@ public class StoryManager : MonoBehaviour
         {
             if(scenario.character.name==currentSpeaker)  
             {
-                scenario.character.SetActive(false);
+                Debug.Log("removed");
+                Destroy(scenario.character);
                 break;
             } 
         }

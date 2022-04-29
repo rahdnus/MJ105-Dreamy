@@ -17,14 +17,14 @@ public class Menu : MonoBehaviour
         {
             formatter.Serialize(stream,data);
         }
-        else
-        {
-            data=formatter.Deserialize(stream) as PlayerData;
-            data.increment();
-            Debug.Log(data.playercounter);
-            stream.SetLength(0);
-            formatter.Serialize(stream,data);
-        }
+        // else
+        // {
+        //     data=formatter.Deserialize(stream) as PlayerData;
+        //     data.increment();
+        //     Debug.Log(data.playercounter);
+        //     stream.SetLength(0);
+        //     formatter.Serialize(stream,data);
+        // }
         stream.Close();
     }
     public void LoadScene(int index)

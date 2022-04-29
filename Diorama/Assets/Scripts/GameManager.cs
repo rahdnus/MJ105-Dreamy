@@ -14,5 +14,5 @@ public class GameManager
             return instance;
         }
     }
-    public string saveName="/player.sav";
+    public string saveName="/player.save";
 }
