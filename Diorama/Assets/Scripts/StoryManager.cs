@@ -144,7 +144,7 @@ public class StoryManager : MonoBehaviour
     public void Begin(string Name)
     {
         currentSpeaker=Name;
-        story.ChoosePathString("Start");
+        story.ChoosePathString("LittleGirl.Conv_1");
         RefreshView();
         DialoguePanel.SetActive(true);
     }

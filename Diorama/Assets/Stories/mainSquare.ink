@@ -1,5 +1,54 @@
 INCLUDE Global.ink
+
 ===Main===
+=Aribter
+->DONE
+
+===LittleGirl===
+=Conv_1
+#Gabriel
+-Hmm?Who are you lady?
+I haven't seen you before.
+Are you new?
++[next]
+-
+#You
++[yes?]
+ #Gabriel
+ You don't sound too sure lady.
+ ++[next]
+ --
+ Hehehe.You are funny lady.
+ ++[next]
+ --
+ Well,lemme welcome you to our town anyway.
+ Welcome to ---, my home!
+ ++[next]
+ --
++[I don't know?]
+ #Gabriel
+
++[...]
+ #Gabriel
+-
+ By the way...
+ Whats your name lady?  
+ +[next]
+ -
+ +[I dont remember]
+ Really?
+ Hmmm, that must be difficult..
+ +[...]
+ You dont wanna tell me?
+ ++[No its not that]
+ Okay, 
+ ++[...]
+ -<>I am sorry for asking too many questions.
+ -
+ +[next]
+->DONE
+
+===Artist===
 ->DONE
 
 ===Start===
