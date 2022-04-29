@@ -1,18 +1,19 @@
 using System;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.Playables;
+
 using Ink.Runtime;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
 public class StoryManager : MonoBehaviour
 {
+    [SerializeField] Scenario[] scenarios;
     public static event Action<Story> OnCreateStory;
     public static event Action OnNext;
-
 	public Story story;
-    
-
+    string currentSpeaker="hello";
     [SerializeField]TextAsset inkJSONAsset = null;
 
     [Space(10)]
@@ -31,23 +32,48 @@ public class StoryManager : MonoBehaviour
         StartStory();
         DialoguePanel.SetActive(false);
 
-        string path=Application.persistentDataPath+"/play.sav";
+        string path=Application.persistentDataPath+GameManager.Instance.saveName;
         FileStream stream=new FileStream(path,FileMode.Open,FileAccess.Read);
         PlayerData data=new PlayerData();
         BinaryFormatter formatter=new BinaryFormatter();
 
         data=formatter.Deserialize(stream) as PlayerData;
+        Debug.Log(data.playercounter);
         story.variablesState["Scenario"]=data.playercounter;
+
+        foreach(Scenario scenario in scenarios)
+        {
+            if(scenario.index==data.playercounter)  
+            {
+                scenario.Activate();
+                break;
+            } 
+        }
+
     }
     void Update()
     {
         if(!Input.anyKey)
         return;
-
+        if(Input.GetKey(KeyCode.Return))
+            {
+                GetComponent<PlayableDirector>().Play();
+            }
         if(OnNext!=null)
         {
             if(Input.GetKeyDown(KeyCode.Return)||Input.GetMouseButton(0))
                 OnNext();
+        }
+    }
+    public void RemoveCharacter()
+    {
+          foreach(Scenario scenario in scenarios)
+        {
+            if(scenario.character.name==currentSpeaker)  
+            {
+                scenario.character.SetActive(false);
+                break;
+            } 
         }
     }
     void StartStory () {
@@ -121,4 +147,13 @@ public class StoryManager : MonoBehaviour
 		story.ChooseChoiceIndex (choice.index);
 		RefreshView();
 	}
+}
+[Serializable]
+public class Scenario{
+    public int index;
+    public GameObject character;
+    public void Activate()
+    {
+        character.SetActive(true);
+    }
 }

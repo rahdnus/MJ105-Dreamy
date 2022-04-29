@@ -9,7 +9,7 @@ public class Menu : MonoBehaviour
 {
     public void UpdatePlayerCounter()
     {
-        string path=Application.persistentDataPath+"/play.sav";
+        string path=Application.persistentDataPath+GameManager.Instance.saveName;
         FileStream stream=new FileStream(path,FileMode.OpenOrCreate,FileAccess.ReadWrite);
         PlayerData data=new PlayerData();
         BinaryFormatter formatter=new BinaryFormatter();
