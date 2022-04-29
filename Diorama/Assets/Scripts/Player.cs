@@ -4,15 +4,54 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // [Tooltip("less than ")]
+    [SerializeField] float moveSpeed=0.2f;
+    CharacterController controller;
+    LayerMask interactionMask;
     void Start()
     {
-        
+        controller=GetComponent<CharacterController>();
+        interactionMask=LayerMask.GetMask("Interactable");
     }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        if(!Input.anyKey)
+            return;
+        Move();
+        Interact();
+
+    }
+    void Interact()
+    {
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+             if(Physics.CheckSphere(transform.position,2f,interactionMask))
+            {
+               Collider[] colliders=Physics.OverlapSphere(transform.position,2.0f,interactionMask);
+               float mindistance=3.0f;
+               Collider interaction=null;
+               foreach(Collider collider in colliders)
+                {
+                    if(collider.GetComponentInParent<Character>())
+                    {
+                        float distance=Vector3.Distance(collider.transform.position,transform.position);
+                        if(distance<mindistance )
+                        {
+                            mindistance=distance;
+                            interaction=collider;
+                        }
+                    }    
+                }
+                if(interaction)
+                    interaction.GetComponentInParent<Character>().Speak();
+
+            }
+        }
+    }
+    void Move()
+    {
+        float x=Input.GetAxis("Horizontal");
+        float y=Input.GetAxis("Vertical");
+        controller.Move(new Vector3(x,y,0)*Time.deltaTime*moveSpeed);
     }
 }
