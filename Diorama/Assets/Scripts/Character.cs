@@ -5,11 +5,10 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     [SerializeField]GameObject prompt;
-
-
+    [SerializeField]StoryManager storyManager;
     public void Speak()
     {
-        Debug.Log("logging");
+        storyManager.Begin();
     }
    void OnTriggerEnter2D(Collider2D collider)
    {
