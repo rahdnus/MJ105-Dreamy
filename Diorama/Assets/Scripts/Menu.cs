@@ -7,6 +7,7 @@ using System.IO;
 
 public class Menu : MonoBehaviour
 {
+    [SerializeField]GameObject curtains;
     public void UpdatePlayerCounter()
     {
         string path=Application.persistentDataPath+GameManager.Instance.saveName;
@@ -27,9 +28,18 @@ public class Menu : MonoBehaviour
         // }
         stream.Close();
     }
+    Coroutine routine;
     public void LoadScene(int index)
     {
+        if(routine==null)
+            routine=StartCoroutine(IloadScene(index));
+    }
+    IEnumerator IloadScene(int index)
+    {
+        curtains.GetComponent<Animator>().Play("in");
+        yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(index);
+
     }
     public void Exit()
     {

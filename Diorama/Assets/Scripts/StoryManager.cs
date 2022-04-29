@@ -10,21 +10,18 @@ using System.IO;
 
 public class StoryManager : MonoBehaviour
 {
-
-     public static event Action<Story> OnCreateStory;
+    public static event Action<Story> OnCreateStory;
     public static event Action OnNext;
 	public Story story;
     [SerializeField]GameObject playerPrefab;
     [SerializeField]CinemachineVirtualCamera virtualCamera;
     [SerializeField]Transform spawnPoint;
     [SerializeField] Scenario[] scenarios;
-
     AudioSource audioSource;
-
     PlayableDirector director;
     string currentSpeaker="hello";
     [Space(20)]
-
+    [SerializeField]Door[] doors;
     [SerializeField]PlayableAsset[] playableassets;
     [SerializeField]AudioClip[] audioClips;
     [Space(20)]
@@ -33,14 +30,13 @@ public class StoryManager : MonoBehaviour
     [SerializeField]TextAsset inkJSONAsset = null;
 
     [Space(10)]
+    [SerializeField]GameObject curtains;
     [SerializeField]GameObject DialoguePanel;
     [SerializeField]GameObject ChoicesPanel;
-
     [Space(10)]
     [SerializeField] Text textUI;
     [SerializeField] Text nameUI;
     [SerializeField] Image imageUI;
-    
     [Space(10)]    
 	[SerializeField] Button buttonPrefab = null;
     void Awake()
@@ -65,7 +61,10 @@ public class StoryManager : MonoBehaviour
                 break;
             } 
         }
-        
+        foreach(Door door in doors)
+        {
+            door.OnLoad+=TriggerCurtains;
+        }
         foreach(AudioClip clip in audioClips)
         {
             audioDictionary.Add(clip.name,clip);
@@ -95,6 +94,10 @@ public class StoryManager : MonoBehaviour
             audioSource.Play();
             
         });
+    }
+    void TriggerCurtains()
+    {
+        curtains.GetComponent<Animator>().Play("in");
     }
     void Start()
     {

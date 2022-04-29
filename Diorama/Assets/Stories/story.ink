@@ -1,8 +1,6 @@
 INCLUDE Global.ink
-
-EXTERNAL playCutscene(name)
-EXTERNAL playAudio(name)
-
+===Main===
+->DONE
 
 ===Start===
 - {Scenario}:I looked at Monsieur Fogg 
@@ -29,5 +27,4 @@ EXTERNAL playAudio(name)
         - we passed the day in silence.
         +[next]     
         -~playCutscene("curtains")
-
         - -> END
