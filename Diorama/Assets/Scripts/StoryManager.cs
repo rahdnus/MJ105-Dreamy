@@ -1,12 +1,12 @@
 using System;
-using UnityEngine.UI;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
-using Cinemachine;
+using UnityEngine.UI;
 using Ink.Runtime;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
+using Cinemachine;
 
 public class StoryManager : MonoBehaviour
 {
@@ -114,7 +114,7 @@ public class StoryManager : MonoBehaviour
             }
         if(OnNext!=null)
         {
-            if(Input.GetKeyDown(KeyCode.Return)||Input.GetMouseButton(0))
+            if(Input.GetKeyDown(KeyCode.Return)||Input.GetMouseButtonDown(0))
                 OnNext();
         }
     }
@@ -148,15 +148,18 @@ public class StoryManager : MonoBehaviour
         RefreshView();
         DialoguePanel.SetActive(true);
     }
-    void RefreshView () {
+    void RefreshView () 
+    {
         Clear();
         OnNext=null;
 		while (story.canContinue) {
-			string text = story.Continue ();
+			string text = story.Continue();
 			text = text.Trim();
+            Debug.Log(text);
             textUI.text+=text;
 		}
 
+        Debug.Log(story.currentChoices.Count);
         if(story.currentChoices.Count==1 && (story.currentChoices[0].text=="next"))
         {
              Choice choice = story.currentChoices [0];
@@ -164,7 +167,8 @@ public class StoryManager : MonoBehaviour
 					OnClickChoiceButton (choice);
 				});
         }
-		else if(story.currentChoices.Count >0) {
+		else 
+        if(story.currentChoices.Count >0) {
             
 			for (int i = 0; i < story.currentChoices.Count; i++) {
 				Choice choice = story.currentChoices [i];
@@ -197,6 +201,7 @@ public class StoryManager : MonoBehaviour
     */
 		return choice;
 	}
+
     void OnClickChoiceButton (Choice choice) 
     {
 		story.ChooseChoiceIndex (choice.index);
