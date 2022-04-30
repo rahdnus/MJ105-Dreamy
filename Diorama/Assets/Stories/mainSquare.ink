@@ -70,11 +70,21 @@ Are you new?
          My dream is to be a ballet dancer one day!
          ++[{NEXT}]
         *[What are you doing here?]
-          Me?
-         I am Gabriel! 
-         Nice to meet you.
-         My dream is to be a ballet dancer one day!
-        ++[{NEXT}]
+         Oh I come here every day to practice.
+         Mom is really happy when i improve at dancing.
+         So I need to keep practicing every day to improve!
+                ++[{NEXT}]
+                --
+                ++[You must really love your Mom.]
+                 Yep, Mum used to buy my popsicles whenever I won in competitions.
+                 She is the best!
+                ++[Very admirable.]
+                 Thanks!
+                 You are very nice lady.
+                ++[I see.]
+                 Yep.
+                --
+                ++[{NEXT}]
         *[What is this place?]
           Me?
          I am Gabriel! 
@@ -95,7 +105,7 @@ Are you new?
 
 ===Start===
 - {Scenario}:I looked at Monsieur Fogg 
-        +[next]
+        +[{NEXT}]
         -
         +   ... and I could contain myself no longer.
             'What is the purpose of our journey, Monsieur?'
