@@ -144,7 +144,8 @@ public class StoryManager : MonoBehaviour
     public void Begin(string Name)
     {
         currentSpeaker=Name;
-        story.ChoosePathString("LittleGirl.Conv_1");
+        story.variablesState["currentSpeaker"]=currentSpeaker;
+        story.ChoosePathString("Main.Arbiter");
         RefreshView();
         DialoguePanel.SetActive(true);
     }
@@ -155,17 +156,23 @@ public class StoryManager : MonoBehaviour
 		while (story.canContinue) {
 			string text = story.Continue();
 			text = text.Trim();
-            Debug.Log(text);
             textUI.text+=text;
-		}
+            Debug.Log(text);
 
-        Debug.Log(story.currentChoices.Count);
-        if(story.currentChoices.Count==1 && (story.currentChoices[0].text=="next"))
+		}
+        if(story.currentChoices.Count==1 && ((story.currentChoices[0].text=="next")||(story.currentChoices[0].text=="end")))
         {
              Choice choice = story.currentChoices [0];
 				OnNext+= (delegate {
 					OnClickChoiceButton (choice);
 				});
+                if((story.currentChoices[0].text=="end"))
+                {
+                    OnNext+= (delegate {
+				    DialoguePanel.SetActive(false);
+                    FindObjectOfType<Player>().inConversation=false;
+				    });
+                }
         }
 		else 
         if(story.currentChoices.Count >0) {
@@ -180,11 +187,7 @@ public class StoryManager : MonoBehaviour
 		}
         else
 		{
-            	OnNext+= (delegate {
-				DialoguePanel.SetActive(false);
-                FindObjectOfType<Player>().inConversation=false;
-                OnNext=null;
-				});
+            	
 		}
 	}
     Button CreateChoiceView (string text) 

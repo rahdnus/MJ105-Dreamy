@@ -1416,7 +1416,7 @@ GameObject:
   - component: {fileID: 1709819491}
   - component: {fileID: 1709819492}
   m_Layer: 6
-  m_Name: hello
+  m_Name: Gabriel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1827,6 +1827,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4795781814028882720, guid: 870bf0d5d94ccc140a8f0ab8ba215815, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 7.64505
+      objectReference: {fileID: 0}
     - target: {fileID: 4795781814182886773, guid: 870bf0d5d94ccc140a8f0ab8ba215815, type: 3}
       propertyPath: m_Pivot.x
       value: 0

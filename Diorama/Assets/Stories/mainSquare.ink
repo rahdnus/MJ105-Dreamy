@@ -1,7 +1,13 @@
 INCLUDE Global.ink
+VAR NEXT="next"
+VAR END="end"
 
 ===Main===
-=Aribter
+=Arbiter
+{
+-currentSpeaker=="Gabriel":
+ ->LittleGirl.Conv_1
+}
 ->DONE
 
 ===LittleGirl===
@@ -10,35 +16,20 @@ INCLUDE Global.ink
 -Hmm?Who are you lady?
 I haven't seen you before.
 Are you new?
-+[next]
--
-I haven't seen you before.
-Are you new?
-+[next]
--
-I haven't seen you before.
-Are you new?
-+[next]
--
-I haven't seen you before.
-Are you new?
-+[next]
--
-I haven't seen you before.
-Are you new?
++[{NEXT}]
 -
 #You
 +[yes?]
  #Gabriel
  You don't sound too sure lady.
- ++[next]
+ ++[{NEXT}]
  --
  Hehehe.You are funny lady.
- ++[next]
+ ++[{NEXT}]
  --
  Well,lemme welcome you to our town anyway.
  Welcome to ---, my home!
- ++[next]
+ ++[{NEXT}]
  --
 +[I don't know?]
  #Gabriel
@@ -49,7 +40,7 @@ Are you new?
  #Gabriel
  By the way...
  Whats your name lady?  
- +[next]
++[{NEXT}]
  -
  +[I dont remember]
   #Gabriel
@@ -58,7 +49,7 @@ Are you new?
  +[...]
   #Gabriel
  You dont wanna tell me?
- ++[next]
+ ++[{NEXT}]
  --
  ++[No its not that]
   #Gabriel
@@ -67,47 +58,37 @@ Are you new?
   Ah,
 -I am sorry for asking too many questions.
  As an apology you can ask me questions too!
-+[next]
--
-+[next]
-+[next]
-// +[next]
-// +[next]
-// +[next]
-// +[next]
++[{NEXT}]
 -Ask me anything.
-
-+[next]
++[{NEXT}]
 -
-->Questions1->
-
--~playCutscene("curtains")
+-(questions)
+        *[Who are you?]
+         Me?
+         I am Gabriel! 
+         Nice to meet you.
+         My dream is to be a ballet dancer one day!
+         ++[{NEXT}]
+        *[What are you doing here?]
+          Me?
+         I am Gabriel! 
+         Nice to meet you.
+         My dream is to be a ballet dancer one day!
+        ++[{NEXT}]
+        *[What is this place?]
+          Me?
+         I am Gabriel! 
+         Nice to meet you.
+         My dream is to be a ballet dancer one day!
+        ++[{NEXT}]
+        *[No not really]
+        aw
+        ->post
+- -> questions
+-(post)
++[{END}]
+~playCutscene("curtains")
 ->DONE
-
-=Questions1
-
--
-*[Who are you?]
- Me?
- I am Gabriel! 
- Nice to meet you.
- My dream is to be a ballet dancer one day!
- ++[next]
- ->Questions1
-*[What are you doing here?]
-++[next]
- ->Questions1
- 
-*[What is this place?]
-++[next]
- ->Questions1
-
-*[No not really]
-++[next]
-        ->->
-
-->DONE
-
 
 ===Artist===
 ->DONE
@@ -137,4 +118,4 @@ Are you new?
         - we passed the day in silence.
         +[next]     
         -~playCutscene("curtains")
-        - -> END
+-> END
